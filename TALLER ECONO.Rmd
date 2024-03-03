@@ -1,0 +1,125 @@
+---
+title: "ECONOMETRIA"
+author: "Mery Rodriguez, Juliana Usaquen"
+date: "2024-03-03"
+output: html_document
+---
+##TALLER ECONOMETRIA
+Mery Rodriguez
+Karoll Usaquen 
+
+```{r}
+install.packages("wooldridge")
+
+library(wooldridge)
+```
+
+
+```{r}
+reg <- lm(bwght ~ cigs + faminc, data = bwght )
+summary(reg)
+
+View(bwght)
+```
+
+
+#C3.1
+1. ¿Cual es el signo más probable para b2?
+Es probable que el signo de b2 sea positivo ya que al tener ingresos mas altos en las familias 
+se mejoran los cuidados prenatales, lo que resulta que el bebe nazca con un buen peso y se le brinda mejor calidad de vida
+a diferencia de las familias que no tengas los mismos ingresos.
+
+2. ¿Cree que cigs y faminc estén correlacionados? Explique por qué la correlación puede ser
+positiva o negativa
+
+se podria decir que tienen una correlacion negativa ya que el consumo de cigarrillo en las madres es mas personal 
+ya que cada quien tiene diferenetes gustos y diferentes maneras de pensar, mas no por tener ingresos mal altos, esto
+no afectaria en este ambito.
+
+3. Ahora, calcule la ecuación con y sin faminc utilizando los datos del archivo BWGHT.
+RAW. Dé los resultados en forma de ecuación incluyendo el tamaño de la muestra y la Rcuadrada. Explique sus resultados enfocándose en si el añadir faminc modifica de manera
+sustancial el efecto esperado de cigs sobre bwght.
+
+
+##Con faminic:
+
+```{r}
+cor(bwght$faminc, bwght$cigs)
+```
+```{r}
+ecu1<-lm(bwght~cigs+faminc,data =bwght) 
+summary(ecu1)
+```
+
+bwght=116.97-0.46cigs+0.093faminc+u
+
+R^2= 0.0298  Tamaño muestral= 
+  
+##sin faminic
+
+```{r}
+ecu2<-lm(bwght~cigs,data =bwght) 
+summary(ecu2)
+```
+
+bwght=119.77190 - 0.51377cigs
+
+R^2 = 0.02273
+
+Los resultados sugieren que la cantidad de cigarrillos fumados por día durante el embarazo es mucho mas importante que los ingresos de la familia.
+
+##C3.2
+
+Utilice los datos del archivo HPRICE1.RAW para estimar el modelo
+i) Escriba los resultados en forma de ecuación
+
+```{r}
+reg1 <- lm(price ~ sqrft + bdrms, data = hprice1)
+summary(reg1)
+
+```
+
+```{r}
+coeficientes <- coef(reg1)
+print(coeficientes)
+```
+## 1.RESULTADOS EN FORMA DE ECUACION 
+PRICE= -19.3149958 + 0.1284362sqrft + 15.1981910bdrms + u
+
+#ii) ¿Cual es el incremento en precio estimado para una casa con una habitación (bdrms) más, manteniendo constante la superficie en pies cuadrados (sqrft)?
+
+Manteniendo constante la superficie de la casa, Se sugiere que, el numero de habitaciones tiene una asociacion positiva con el precio de la casa y cada habitacion adicional se asocia en promedio con un aumento de 15,198.2 en el precio.
+
+#iii) ¿Cual es el incremento en precio estimado para una casa con una habitación adicional de 140 pies cuadrados? Compare esto con su respuesta al inciso (ii).
+
+```{r}
+-19.3149958 + 0.1284362*140 + 15.19819101*1
+```
+Se espera que el precio de la casa aumente en 128.44 por cada pie cuadrado adicional, manteniendo constante el numero de habitaciones. Si aplicamos este hallazgo a una situacion especifica, como una habitacion de 140 pies cuadrados adicionales, se anticiparia un aumento en el precio de 13,86426
+
+##iv) ¿Qué porcentaje de la variación en el precio se explica por la extensión en pies cuadrados y el número de habitaciones?
+
+```{r}
+reg1 <- lm(price ~ sqrft + bdrms, data = hprice1)
+resumen_reg1 <- summary(reg1)
+r_cuadrado <- resumen_reg1$r.squared
+print(r_cuadrado)
+```
+Aproximadamente el 62,32% de la variacion del precio de la casa se explica por la amplitud en pies cuadrados y tambien el numero de habitaciones.
+
+##v) La primera casa en la muestra tiene sqrft  2,438 y bdrms  4. Determine el precio de venta estimado para esta casa con la línea de regresión de MCO.
+
+```{r}
+-19.3149958 + 0.1284362*2438 + 15.19819101*4
+```
+El precio de venta considerado para la casa con 2,438 pies cuadrados y  cuatro habitaciones es de $3546052 dolares
+
+##vi) El precio de venta de la primera casa en la muestra fue $300,000 (así que price  300).Determine el residual para esta casa. ¿Sugiere esto que el comprador pagó de más o demenos por la casa?
+
+```{r}
+300000-3546052
+```
+El comprador pago menos de lo que se habia esperado por la casa.
+
+
+
